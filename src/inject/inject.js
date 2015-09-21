@@ -133,20 +133,24 @@ chrome.extension.sendMessage({}, function() {
   }
 
   function collapseList(){
-    var cardList = $(':hover').last().parents('.list');
+    var cardList = $('.list').last();
     if(!cardList){
-        return;
+        return 'none';
     }
 
     var prevHeight = cardList.attr('prevHeight');
     if(prevHeight){
-      cardList.animate({ height: prevHeight});
+      cardList.animate({ height: prevHeight });
       cardList.removeAttr('prevHeight');
+      cardList.css({ transform: 'none', width: 'auto' });
+      cardList.parent().animate({ width: '270px'});
     }
     else {
       var height = cardList.height();
       cardList.attr('prevHeight', height);
       cardList.animate({ height: '67px'});
+      cardList.css({ transition: 'transform 0.5s ease', transformOrigin: '0 0', transform: 'rotate(90deg) translateY(-67px)', width: '270px' });
+      cardList.parent().animate({ width: '67px'});
     }
   }
 
